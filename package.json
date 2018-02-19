@@ -1,0 +1,35 @@
+{
+  "name": "slack-clerk",
+  "version": "0.1.0",
+  "description": "It's clerk for you team",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "0.0.32",
+    "@types/node": "^8.9.4",
+    "serverless-offline": "^3.18.0",
+    "serverless-webpack": "^4.3.0",
+    "ts-loader": "^3.5.0",
+    "typescript": "^2.7.2",
+    "webpack": "^3.11.0"
+  },
+  "author": "Bonggyun Lee <deptno@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deptno/slack-clerk.git"
+  },
+  "keywords": [
+    "slack",
+    "slack-app",
+    "slack-clerk",
+    "clerk"
+  ],
+  "bugs": {
+    "url": "https://github.com/deptno/slack-clerk/issues"
+  },
+  "homepage": "https://github.com/deptno/slack-clerk#readme"
+}

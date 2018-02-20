@@ -9,6 +9,7 @@ provider:
   name: aws
   runtime: nodejs6.10
   region: ap-northeast-2
+  memorySize: 128
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
   iamRoleStatements:

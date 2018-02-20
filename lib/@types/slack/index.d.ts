@@ -1,5 +1,5 @@
 declare module '@deptno/slack' {
-  type Packet = UrlVerificationPacket|MessagePacket
+  type Packet = UrlVerificationPacket | MessagePacket
 
   interface UrlVerificationPacket {
     type: 'url_verification'
@@ -9,19 +9,38 @@ declare module '@deptno/slack' {
   interface MessagePacket {
     token: string
     team_id: string
-    event: MessageEvent
+    event: Event
     type: string
     event_id: number
     authed_users: string[]
   }
 
-  type Event = MessageEvent
-  interface MessageEvent {
+  type Event = NewMessageEvent | MessageChangedEvent
+  interface NewMessageEvent extends Message {
+    channel: string
+    event_ts: string
+  }
+  interface MessageChangedEvent {
+    type: 'message'
+    subtype: 'message_changed'
+    hidden: boolean
+    ts: string
+    channel: string
+    event_ts: string
+    message: EditedMessage
+    previous_message: PreviousMessage
+  }
+  interface Message {
     type: 'message'
     user: string
     text: string
     ts: string
-    channel: string
-    event_ts: string
   }
+  interface EditedMessage extends Message {
+    edited: {
+      user: string
+      ts: string
+    }
+  }
+  type PreviousMessage = Message
 }

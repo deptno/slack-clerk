@@ -52,22 +52,10 @@ resources:
           -
             AttributeName: url
             AttributeType: S
-          -
-            AttributeName: channelName
-            AttributeType: S
-          -
-            AttributeName: userId
-            AttributeType: S
-          -
-            AttributeName: timestamp
-            AttributeType: N
         KeySchema:
           -
             AttributeName: url
             KeyType: HASH
-          -
-            AttributeName: timestamp
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

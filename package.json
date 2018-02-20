@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "setup": "serverless dynamodb install",
-    "start:dev:db": "serverless dynamodb start",
+    "start:db": "serverless dynamodb start --migrate",
     "start:dev": "serverless offline",
     "test": "jest"
   },

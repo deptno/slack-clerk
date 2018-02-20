@@ -4,6 +4,7 @@
   "description": "It's clerk for you team",
   "main": "handler.js",
   "scripts": {
+    "setup": "serverless dynamodb install",
     "start:dev:db": "serverless dynamodb start",
     "start:dev": "serverless offline",
     "test": "jest"

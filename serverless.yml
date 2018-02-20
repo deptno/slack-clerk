@@ -50,12 +50,24 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: url
             AttributeType: S
+          -
+            AttributeName: channelName
+            AttributeType: S
+          -
+            AttributeName: userId
+            AttributeType: S
+          -
+            AttributeName: timestamp
+            AttributeType: N
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: url
             KeyType: HASH
+          -
+            AttributeName: timestamp
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

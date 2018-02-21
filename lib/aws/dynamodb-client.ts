@@ -20,3 +20,16 @@ export function putItem<T extends object>(item: T) {
     })
   })
 }
+export function scan() {
+  return new Promise((resolve, reject) => {
+    docClient.scan({
+      TableName: process.env.DYNAMODB_TABLE
+    }, (err, data) => {
+      if (err) {
+        console.error(err)
+        return resolve(null)
+      }
+      return resolve(data)
+    })
+  })
+}

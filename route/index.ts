@@ -7,6 +7,7 @@ export const handler: Handler = (event: APIGatewayEvent, context: Context, cb: C
   const input = JSON.parse(event.body)
   const handled = route(input)
 
+  console.log(input)
   if (handled !== null) {
     return cb(null, {
       statusCode: 200,
@@ -17,10 +18,7 @@ export const handler: Handler = (event: APIGatewayEvent, context: Context, cb: C
   console.error('unhandled event', event.body)
   return cb(null, {
     statusCode: 500,
-    body      : JSON.stringify({
-      message: 'unknown event',
-      input
-    }),
+    body      : '',
   })
 }
 

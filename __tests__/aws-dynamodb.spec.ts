@@ -1,6 +1,6 @@
 import {DynamoDB} from 'aws-sdk'
 
-describe('dynamodb', () => {
+describe('aws-dynamodb', () => {
   const ddb = new DynamoDB({
     region  : 'localhost',
     endpoint: 'http://localhost:8000'
@@ -25,7 +25,7 @@ describe('dynamodb', () => {
   })
 })
 
-describe('dynamodb client', () => {
+describe('aws-dynamodb client', () => {
   const docClient = new DynamoDB.DocumentClient({
     region  : 'localhost',
     endpoint: 'http://localhost:8000'

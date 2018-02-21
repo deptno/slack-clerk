@@ -31,12 +31,6 @@ custom:
       seed: true
 
 functions:
-  echo:
-    handler: route/echo.handler
-    events:
-      - http:
-          method: get
-          path: echo
   slack:
     handler: route/index.handler
     events:
@@ -44,9 +38,16 @@ functions:
           method: post
           path: /
 
+  list:
+    handler: route/list.handler
+    events:
+      - http:
+          method: get
+          path: /links
+
 resources:
   Resources:
-    TodosDynamoDbTable:
+    DynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:

@@ -27,9 +27,9 @@ export function scan() {
     }, (err, data) => {
       if (err) {
         console.error(err)
-        return resolve(null)
+        return resolve([])
       }
-      return resolve(data)
+      return resolve(data.Items)
     })
   })
 }

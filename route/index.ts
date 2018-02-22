@@ -9,7 +9,6 @@ export const post: Handler = (event: APIGatewayEvent, context: Context, cb: Call
   const input = JSON.parse(event.body)
   const handled = route(input)
 
-  console.log(input)
   if (handled !== null) {
     return cb(null, {
       statusCode: 200,
@@ -94,7 +93,6 @@ function handleNewMessage(team, channel, event: NewMessageEvent) {
 async function saveLink(link: Link) {
   const response = await fetch(link.url)
   const html = await response.text()
-
   const meta = await metaScraper({
     html,
     url: link.url

@@ -3,7 +3,7 @@ import {Event, MessagePacket, NewMessageEvent, UrlVerificationPacket} from '@dep
 import * as getUrl from 'get-urls'
 import {putItem} from '../lib/aws/dynamodb-client'
 
-export const handler: Handler = (event: APIGatewayEvent, context: Context, cb: Callback) => {
+export const post: Handler = (event: APIGatewayEvent, context: Context, cb: Callback) => {
   const input = JSON.parse(event.body)
   const handled = route(input)
 

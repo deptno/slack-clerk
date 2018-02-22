@@ -32,14 +32,14 @@ custom:
 
 functions:
   slack:
-    handler: route/index.handler
+    handler: route/index.post
     events:
       - http:
           method: post
           path: /
 
   list:
-    handler: route/list.handler
+    handler: route/links.get
     events:
       - http:
           method: get

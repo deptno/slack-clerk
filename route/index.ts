@@ -80,7 +80,7 @@ function handleNewMessage(team, channel, event: NewMessageEvent) {
     urls.forEach(async url => {
       try {
         const timestamp = parseFloat(ts.split('.')[0])
-        await putItem({url, user, teamId: team, channel, timestamp})
+        await putItem({url, user, team, channel, timestamp})
       } catch (ex) {
         console.error(ex)
         console.log('ignored', event)

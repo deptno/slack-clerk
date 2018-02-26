@@ -78,6 +78,7 @@ function handleNewMessage(team, channel, event: NewMessageEvent) {
     console.log('URL DETECTED', urls)
 
     urls.forEach(async url => {
+      url = url.trim()
       try {
         const timestamp = parseFloat(ts.split('.')[0])
         await putItem({url, user, team, channel, timestamp})

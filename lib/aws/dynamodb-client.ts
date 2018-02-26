@@ -20,7 +20,7 @@ export function putItem<T extends object>(item: T) {
     })
   })
 }
-export function scan() {
+export function scan(): Promise<Link[]> {
   return new Promise((resolve, reject) => {
     docClient.scan({
       TableName: process.env.DYNAMODB_TABLE
@@ -29,7 +29,7 @@ export function scan() {
         console.error(err)
         return resolve([])
       }
-      return resolve(data.Items)
+      return resolve(data.Items as Link[])
     })
   })
 }

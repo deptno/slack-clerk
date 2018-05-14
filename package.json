@@ -18,7 +18,7 @@
     "@types/node": "^8.9.4",
     "@types/node-fetch": "^1.6.7",
     "@types/ramda": "^0.25.28",
-    "aws-sdk": "^2.197.0",
+    "aws-sdk": "^2.238.1",
     "jest": "^22.3.0",
     "serverless": "^1.26.0",
     "serverless-dynamodb-local": "^0.2.27",
@@ -26,7 +26,7 @@
     "serverless-webpack": "^4.3.0",
     "ts-jest": "^22.0.4",
     "ts-loader": "^3.5.0",
-    "typescript": "^2.7.2",
+    "typescript": "^2.8.3",
     "webpack": "^3.11.0"
   },
   "author": "Bonggyun Lee <deptno@gmail.com>",

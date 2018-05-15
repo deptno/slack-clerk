@@ -1,6 +1,6 @@
-import {DynamoDB} from 'aws-sdk'
-import {fetch} from 'metafetch'
-import {promisify} from 'util'
+import { DynamoDB } from 'aws-sdk'
+import { fetch } from 'metafetch'
+import { promisify } from 'util'
 import * as R from 'ramda'
 
 const TableName = 'slack-clerk-dev'
@@ -13,11 +13,31 @@ const metadata: (url: string) => Promise<Metadata> = async (url) => {
     return null
   }
 }
-const docClient = new DynamoDB.DocumentClient({region: 'ap-northeast-2'})
+const docClient = new DynamoDB.DocumentClient({ region: 'ap-northeast-2' })
 
+export function batchWrite<T extends object>(items: T[]) {
+  if (items.length > 25) {
+    throw new Error('length(25) limit violation')
+  }
+  return new Promise((resolve, reject) => {
+    const params = {
+      RequestItems: {
+        [TableName]: items.map(Item => ({ PutRequest: { Item } }))
+      }
+    }
+    docClient.batchWrite(params, err => {
+      if (err) {
+        console.error(err)
+        console.error(JSON.stringify(params))
+        return reject(err)
+      }
+      return resolve()
+    })
+  })
+}
 export function putItem<T extends object>(item: T) {
   return new Promise((resolve, reject) => {
-    docClient.put({TableName, Item: item}, err => {
+    docClient.put({ TableName, Item: item }, err => {
       if (err) {
         return reject(err)
       }
@@ -27,7 +47,7 @@ export function putItem<T extends object>(item: T) {
 }
 export function scan(): Promise<Link[]> {
   return new Promise(resolve => {
-    docClient.scan({TableName}, (err, data) => {
+    docClient.scan({ TableName }, (err, data) => {
       if (err) {
         console.error(err)
         return resolve([])
@@ -46,7 +66,15 @@ export function scan(): Promise<Link[]> {
   const schema = R.map(
     R.ifElse(
       R.complement(R.isNil),
-      R.pick(['url', 'ampURL', 'image', 'title']),
+      R.compose(
+        R.zipObj(['url', 'ampURL', 'image', 'title']),
+        R.map(
+          R.ifElse(
+            R.isEmpty,
+            R.always(' '),
+            R.identity)),
+        R.values,
+        R.pick(['url', 'ampURL', 'image', 'title'])),
       R.always(null)))
   const meta = schema(await metaList(data))
   const migrated = R.zipWith(
@@ -54,7 +82,14 @@ export function scan(): Promise<Link[]> {
     data,
     R.map(R.objOf('meta'), meta))
 
-  //todo: batch put
+  console.log('sample')
+  console.log(R.head(migrated))
+
+  for (const bunch of R.splitEvery(25, migrated)) {
+    await batchWrite(bunch)
+    console.log('put 25 items')
+  }
+  console.log('done!')
 }()
 
 interface Metadata {

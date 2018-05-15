@@ -85,8 +85,11 @@ function handleNewMessage(team, channel, event: NewMessageEvent) {
       try {
         const timestamp = parseFloat(ts.split('.')[0])
         const item = {url, user, team, channel, timestamp}
-        const meta = await metadata(url)
-        await putItem<Link>({...item, meta})
+        const meta = await Promise.race([
+          metadata(url),
+          new Promise<any>(resolve => setTimeout(resolve,15000))
+        ])
+        putItem<Link>({...item, meta})
       } catch (ex) {
         console.error(ex)
         console.log('ignored', event)

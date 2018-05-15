@@ -10,6 +10,7 @@ provider:
   runtime: nodejs8.10
   region: ap-northeast-2
   memorySize: 196
+  timeout: 20
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
   iamRoleStatements:

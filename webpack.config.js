@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const slsw = require('serverless-webpack');
 
@@ -24,4 +25,5 @@ module.exports = {
       { test: /\.ts(x?)$/, loader: 'ts-loader' },
     ],
   },
+  plugins: [ new webpack.DefinePlugin({ "global.GENTLY": false }) ]
 };

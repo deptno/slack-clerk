@@ -59,6 +59,7 @@ export function scan(): Promise<Link[]> {
 
 +async function migration() {
   const data = await scan()
+  const metaProps: (keyof Metadata)[] = ['url', 'ampURL', 'image', 'title', 'description', 'language', 'siteName']
   const metaList = R.compose(
     R.bind(Promise.all, Promise as any),
     R.map(metadata),
@@ -67,14 +68,14 @@ export function scan(): Promise<Link[]> {
     R.ifElse(
       R.complement(R.isNil),
       R.compose(
-        R.zipObj(['url', 'ampURL', 'image', 'title']),
+        R.zipObj(metaProps),
         R.map(
           R.ifElse(
             R.isEmpty,
             R.always(' '),
             R.identity)),
         R.values,
-        R.pick(['url', 'ampURL', 'image', 'title'])),
+        R.pick(metaProps)),
       R.always(null)))
   const meta = schema(await metaList(data))
   const migrated = R.zipWith(

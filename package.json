@@ -1,6 +1,6 @@
 {
   "name": "slack-clerk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "It's clerk for you team",
   "main": "handler.js",
   "scripts": {

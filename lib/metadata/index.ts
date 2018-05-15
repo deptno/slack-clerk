@@ -2,9 +2,29 @@ import {fetch} from 'metafetch'
 import {promisify} from 'util'
 import * as R from 'ramda'
 
-export const metadata: (url: string) => Promise<Metadata> = R.tryCatch(promisify(fetch), R.unary(R.always(null)))
+const metaFetch = promisify(fetch)
+export const metadata: (url: string) => Promise<Metadata> = async (url) => {
+  try {
+    return extract(await metaFetch(url))
+  } catch (ex) {
+    return null
+  }
+}
+const metaProps: (keyof Metadata)[] = ['url', 'ampURL', 'image', 'title', 'description', 'language', 'siteName']
+const extract = R.ifElse(
+  R.complement(R.isNil),
+  R.compose(
+    R.zipObj(metaProps),
+    R.map(
+      R.ifElse(
+        R.isEmpty,
+        R.always(' '),
+        R.identity)),
+    R.values,
+    R.pick(metaProps)),
+  R.always(null))
 
-interface Metadata {
+export interface Metadata {
   charset: 'UTF-8' | string
   images: string[]
   links: string[]
@@ -69,3 +89,4 @@ interface Metadata {
     'X-UA-Compatible': string
   }
 }
+

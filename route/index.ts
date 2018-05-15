@@ -2,6 +2,7 @@ import {APIGatewayEvent, Callback, Context, Handler} from 'aws-lambda'
 import {Event, MessagePacket, NewMessageEvent, UrlVerificationPacket} from '@deptno/slack'
 import * as getUrl from 'get-urls'
 import {putItem} from '../lib/aws/dynamodb-client'
+import {metadata} from '../lib/metadata'
 
 export const post: Handler = (event: APIGatewayEvent, context: Context, cb: Callback) => {
   const input = JSON.parse(event.body)
@@ -83,7 +84,9 @@ function handleNewMessage(team, channel, event: NewMessageEvent) {
       }
       try {
         const timestamp = parseFloat(ts.split('.')[0])
-        await putItem<Link>({url, user, team, channel, timestamp})
+        const item = {url, user, team, channel, timestamp}
+        const meta = await metadata(url)
+        await putItem<Link>({...item, meta})
       } catch (ex) {
         console.error(ex)
         console.log('ignored', event)

@@ -25,3 +25,6 @@ npm run deploy
 ```bash
 npm run remove
 ```
+
+## related
+- https://github.com/deptno/slack-clerk-fe
